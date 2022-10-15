@@ -1,0 +1,37 @@
+.popup-wrap.popup-preview {
+   width: 100vw;
+   .popup {
+      width: calc(100vw - 90px);
+   }
+}
+
+.popupSwiper-container {
+   width: 100%;
+   .popupSwiper {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      .swiper-slide {
+         width: 100%;
+         height: 100%;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         img {
+            max-width: 100%;
+            height: auto;
+         }
+      }
+   }
+}
+
+
+
+@media all and (min-width: 770px) {
+   .popup-wrap.popup-preview, .popup-wrap.popup-preview .popup { width: 100%; }
+   .popupSwiper-container { width: 600px; }
+}
+
+@media all and (max-width: 550px) {
+   .popup-wrap.popup-preview .popup { width: calc(100vw - 30px); }
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+@@include('components/_head.html', {
+"title": "TECRON"
+})
+
+<body>
+   @@include('components/preloader.html')
+   @@include('components/preloader-line.html')
+
+   <main class="main-404">
+      @@include('components/_header.html')
+
+      <div class="page-title-404" data-calc-height>
+         <div class="page-title-bg"></div>
+         <div class="page-title-wrap">
+            <div class="page-title-content">
+               <h2 class="page-title"><strong>Ошибка 404</strong></h2>
+
+               <div class="breadcrumbs">
+                  <a href="/"><span>TECRON</span> <strong>/</strong></a>
+                  <span>Ошибка 404</span>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <section class="section-404">
+         <div class="ui-container">
+            <h2 class="section-title animate"><strong>Страница</strong> не найдена</h2>
+
+            <div class="block-404">
+               <h1>404</h1>
+               <p class="ui-text">Страница, которую вы искали, не существует или была удалена.</p>
+               <button class="ui-button" onclick="window.history.back()"><span>назад</span></button>
+            </div>
+         </div>
+      </section>
+
+      @@include('components/_footer.html')
+   </main>
+
+
+   @@include('components/mobile-menu/mobile-menu.html')
+   @@include('components/overlay.html')
+
+   <script src="libs/preloader.js"></script>
+   <script src="https://unpkg.com/imask"></script>
+   <script src="js/bundle.min.js"></script>
+</body>
+
+</html>

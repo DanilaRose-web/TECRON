@@ -1,0 +1,179 @@
+// header top
+header {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   z-index: 2;
+   &.scroll {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      box-shadow: 0 10px 20px 10px rgba(0, 0, 0, 0.08);
+      animation: headerFadeRev 0.3s ease-out forwards;
+      &.active {
+         animation: headerFade 0.3s ease-out forwards;
+      }
+      .h-bottom {
+         padding: 10px 0;
+      }
+   }
+   
+}
+
+@keyframes headerFade {
+   0% { transform: translateY(-100%); opacity: 0; visibility: hidden; }
+   100% { transform: translateY(0); opacity: 1; visibility: visible; }
+}
+
+@keyframes headerFadeRev {
+   0% { transform: translateY(0); opacity: 1; visibility: visible; }
+   100% { transform: translateY(-100%); opacity: 0; visibility: hidden; }
+}
+
+.h-top {
+   padding: 8px 0;
+   background: $main-light;
+   .h-contact {
+      display: flex;
+      align-items: center;
+      & > a {
+         display: flex;
+         align-items: center;
+         svg {
+            margin-right: 5px;
+            width: 13px;
+            height: 13px;
+            fill: $text-1;
+            transition: all 0.2s ease-out;
+         }
+         span {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 140%;
+            align-items: center;
+            letter-spacing: -0.02em;
+            color: $text-1;
+            position: relative;
+            &::after {
+               content: '';
+               position: absolute; 
+               bottom: -2px;
+               left: 50%;
+               transform: translateX(-50%);
+               height: 1px;
+               width: 0;
+               background: $main-colored;
+               transition: all 0.2s ease-out;
+            }
+         }
+         &.h-link-border {
+            margin: 0 10px;
+            padding: 0 10px;
+            border-right: 1px solid $text-1;
+            border-left: 1px solid $text-1;
+         }
+         &:hover {
+            svg {
+               fill: $main-colored;
+            }
+            span {
+               color: $main-colored;
+               &::after {
+                  width: 100%;
+               }
+            }
+         }
+      }
+   }
+}
+
+
+
+
+
+
+
+// header bottom
+.h-bottom {
+   padding: 18px 0;
+   background: $section-bg-1;
+   position: relative;
+}
+
+
+.nav-menu-wrap {
+   display: flex;
+   align-items: center;
+}
+
+.h-contact {
+   display: contents;
+   .ui-button {
+      @include button(
+         $light: true, 
+         $padding: 5px 17px, 
+         $fz: 16px,
+         $shadow: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.15))
+      );
+      opacity: 1;
+      visibility: visible;
+      transition: all 0.1s ease-out;
+      &.hide {
+         opacity: 0;
+         visibility: hidden;
+         transform: translateX(10px);
+      }
+   }
+}
+
+.h-contact-social {
+   margin-left: 30px;
+   display: flex;
+   align-items: center;
+   gap: 18px;
+   a {
+      display: block;
+      width: 20px;
+      height: 20px;
+      svg {
+         width: inherit;
+         height: inherit;
+         fill: $main-colored;
+         transition: all 0.3s ease-out;
+      }
+      &:hover svg {
+         transform: rotateY(180deg);
+      }
+   }
+}
+
+.mobile-menu .h-contact-social {
+   margin-left: 0;
+}
+
+
+
+
+// header container
+.h-container {
+   @include container($flex: true, $padding: 0 15px,);
+}
+
+
+
+
+@media all and (max-width: 1140px) {
+   .h-top { display: none; }
+   .h-contact .ui-button { margin-left: 20px;  width: 163px; }
+}
+
+@media all and (max-width: 600px) {
+   header .h-contact-social { display: none; }
+}
+
+@media all and (max-width: 550px) {
+   .h-contact .ui-button { display: none; }
+}

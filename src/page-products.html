@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+   @@include('components/_head.html', {
+      "title": "TECRON"
+   })
+<body>
+   @@include('components/preloader.html')
+   @@include('components/preloader-line.html')
+   
+   <main>
+      @@include('components/_header.html')
+
+      <div class="page-title-products" data-calc-height>
+         <div class="page-title-bg"></div>
+         <div class="page-title-wrap">
+            <div class="page-title-content">
+               <h2 class="page-title"><strong>Продукция</strong></h2>
+
+               <div class="breadcrumbs">
+                  <a href="/"><span>TECRON</span> <strong>/</strong></a>
+                  <span>Продукция</span>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <section class="section-p-main">
+         <div class="ui-container">
+            <div class="aside-tabs animate" dont_has_child_tab>
+               <li data-tab-name="1" data-image="img/app/backgrounds/page-products.webp" has_children_right class="has-children">Комбинезоны одноразовые</li>
+               <li data-tab-name="2" data-image="img/app/backgrounds/page-products1.webp" has_children_right class="has-children">Перчатки</li>
+               <li data-tab-name="3" data-image="img/app/backgrounds/page-products2.webp" has_children_right class="has-children">Беруши</li>
+               <li data-tab-name="4" data-image="img/app/backgrounds/page-products.webp" has_children_right class="has-children">Очки защитные</li>
+               <li data-tab-name="5" data-image="img/app/backgrounds/page-products1.webp" has_children_right class="has-children">Ледоступы</li>
+            </div>
+
+
+            <div class="aside-catalog">
+               <div class="p-first-content animate">
+                  <div class="p-first-content-info">
+                     <p class="ui-text">Наша защитная продукция создана по высоким стандартам качества специально для защиты от химических реагентов и промышленных загрязнений. Представляем вам комбинезон TECRON Pro — ваш лучший помощник в грязной работе.</p>
+                  </div>
+                  <div class="p-first-content-img">
+                     <img src="img/app/other/korobka.webp" alt="TECRON упаковка">
+                  </div>
+               </div>
+
+               <div class="aside-catalog-wrapper" [dont_has_child_tab]>
+                  <li data-tab-name="1" data-image="img/app/backgrounds/page-products.webp" has_children_right class="has-children">Комбинезоны одноразовые</li>
+                  @@include('components/page-products/aside-catalog.html')
+
+                  <li data-tab-name="2" data-image="img/app/backgrounds/page-products1.webp" has_children_right class="has-children">Перчатки</li>
+                  @@include('components/page-products/aside-catalog.html')
+
+                  <li data-tab-name="3" data-image="img/app/backgrounds/page-products2.webp" has_children_right class="has-children">Беруши</li>
+                  @@include('components/page-products/aside-catalog.html')
+
+                  <li data-tab-name="4" data-image="img/app/backgrounds/page-products.webp" has_children_right class="has-children">Очки защитные</li>
+                  @@include('components/page-products/aside-catalog.html')
+
+                  <li data-tab-name="5" data-image="img/app/backgrounds/page-products1.webp" has_children_right class="has-children">Ледоступы</li>
+                  @@include('components/page-products/aside-catalog.html')
+               </div>
+            </div>
+         </div>
+      </section>
+
+      @@include('components/sections/section-contact.html', {
+         "strong": "Получить",
+         "title": "консультацию"
+      })
+
+      @@include('components/_footer.html')
+   </main>
+   
+
+   @@include('components/mobile-menu/mobile-menu.html')
+   @@include('components/overlay.html')
+
+   <script src="libs/preloader.js"></script>
+   <script src="https://unpkg.com/imask"></script>
+   <script src="js/bundle.min.js"></script>
+</body>
+</html>

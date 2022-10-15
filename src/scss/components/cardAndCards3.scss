@@ -1,0 +1,20 @@
+
+   .t-col {
+      margin-bottom: 30px;
+      display: flex;
+   }
+
+
+
+@media all and (max-width: 1050px) {
+   .aside-catalog .t-col { flex: 0 0 50%; max-width: 50%; }
+}
+
+@media all and (max-width: 800px) {
+   .aside-catalog {padding-left: 0; width: 100%; }
+   .aside-catalog .t-col { flex: 0 0 50%; max-width: 50%; }
+}
+
+@media all and (max-width: 530px) {
+   .aside-catalog .t-col { flex: 0 0 100%; max-width: 100%; }
+}

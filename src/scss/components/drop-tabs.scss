@@ -1,0 +1,146 @@
+.drop-tabs-wrap {
+   margin: 25px 0;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   border-bottom: 1px solid $border;
+   position: relative;
+   z-index: 2;
+   @include scrollAnimate($transitionShow: all 0.3s ease-out 0.2s);
+   .selected {
+      padding: 10px 15px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      width: 100%;
+      border: 1px solid $main-colored;
+      background: $main-light;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s ease-out;
+   }
+   .all {
+      @include hover_links($bg: $main-colored, $offsetX: 50%, $colorHover: $main-colored);
+      margin-left: 15px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 157%;
+      letter-spacing: 0.1px;
+      color: $decoration;
+      display: inline-block;
+   }
+   .selected {
+      display: none;
+   }
+}
+
+.drop-tabs {
+   display: flex;
+   align-items: center;
+   position: relative;
+   &.has-children span.menu-arrow {
+      display: none;
+   }
+}
+
+.r-tabs {
+   display: flex;
+   align-items: center;
+   gap: 40px;
+   position: relative;
+   background: $main-light;
+   li {
+      padding-bottom: 13px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 34px;
+      color: $main-dark;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.1s ease-out;
+      &:hover {
+         color: $main-colored
+      }
+      &.active {
+         &:hover {
+            color: $main-dark;
+         }
+      }
+      &.swimming {
+         @extend %lavaLamp;
+      }
+   }
+}
+
+
+
+@media all and (max-width: 1000px) {
+   .drop-tabs-wrap {
+      width: 100%;
+      border: none;
+      .all { display: none; }
+   }
+   .drop-tabs {
+      width: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      &.has-children span.menu-arrow {
+         display: block;
+      }
+      .selected { display: flex; }
+      .r-tabs {
+         position: absolute;
+         top: 140%;
+         left: 0;
+         width: 100%;
+         flex-direction: column;
+         align-items: flex-start;
+         gap: 0;
+         border-radius: 5px;
+         border: 1px solid $main-colored;
+         overflow-y: auto;
+         opacity: 0;
+         visibility: hidden;
+         transition: all 0.2s ease-out;
+         li {
+            padding: 10px 15px;
+            width: 100%;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            &.swimming {
+               display: none;
+            }
+            &:hover {
+               background: $section-bg-1;
+            }
+            &.active {
+               border-radius: 0;
+               background: $main-colored;
+               color: $main-light;
+            }
+         }
+      }
+      &.open {
+         .r-tabs {
+            top: 110%;
+            opacity: 1;
+            visibility: visible; 
+         }
+      }
+   }
+}
+
+
+
+
+
+
+

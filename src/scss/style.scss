@@ -1,0 +1,738 @@
+/* 
+----------------------------------------------------------------------
+   ! IMPORT
+----------------------------------------------------------------------
+*/ 
+
+@import './fonts';
+@import '../libs/reset.min';
+@import '../libs/bootstrap-grid.min';
+@import './mixins';
+@import '../../node_modules/swiper/swiper-bundle.min';
+
+// ? UI-компоненты
+@import './ui-components';
+
+// ? Базовые компоненты
+@import './components/_header';
+@import './components/_footer';
+@import './components/mobile-menu';
+
+// ? Компоненты
+@import './components/nav-menu';
+@import './components/main-slider';
+@import './components/cardAndCards3';
+@import './components/drop-tabs';
+@import './components/forms/form';
+@import './components/forms/search-form';
+@import './components/preloader';
+@import './components/popups/popup-certificate';
+@import './components/popups/popup-product-preview';
+@import './components/aside-tabs';
+@import './components/product-card';
+
+// ? Секции
+@import './components/sections/section-contact';
+@import './components/sections/section-recommendend';
+@import './components/sections/section-also-buy';
+
+
+// ? Страницы
+@import './pages/page-main';
+@import './pages/page-about';
+@import './pages/page-support';
+@import './pages/page-products';
+@import './pages/page-buy';
+@import './pages/page-404';
+@import './pages/page-product-single';
+
+
+// @import './components/tabs-dropdown';
+
+
+
+* {
+   box-sizing: border-box;
+}
+
+html,body {
+   height: 100%;
+   // all: unset; // сбрасывыает все стили до значений по умолчанию
+}
+
+body {
+   position: relative;
+   font-family: 'Roboto', sans-serif;
+   &.hidden {
+      overflow: hidden;
+   }
+}
+
+a, a:focus, a:hover, a:active,
+button, button:hover, button:active,
+input, input:focus, input:hover, input:active {
+   text-decoration: none;
+   outline: none;
+   // all: unset;
+   cursor: pointer;
+}
+
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Swiper slider pagination
+----------------------------------------------------------------------
+*/
+.swiper-horizontal>.swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal,
+.swiper-pagination-custom,
+.swiper-pagination-fraction {
+   bottom: -40px;
+
+   .swiper-pagination-bullet-active {
+      background: $main-colored;
+   }
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Swiper slider arrows
+----------------------------------------------------------------------
+*/
+.swiper-button-next, .swiper-button-prev {
+   opacity: 0;
+   visibility: hidden;
+   transition: all 0.2s ease-in-out;
+   &:after {
+      content: '';
+      color: $border;
+      transition: all 0.2s ease-out;
+      display: none;
+   }
+   svg {
+      width: 21px;
+      height: 38px;
+      stroke: $socials-light;
+      transition: all 0.2s ease-out;
+   }
+   &:hover {
+      &:after {
+         color: $main-colored;
+      }
+      svg {
+         stroke: $main-colored
+      }
+   }
+}
+
+.swiper, .swipersWrapper {
+   .swiper-button-next,
+   .swiper-button-prev {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease-out;
+   }
+
+   .swiper-button-prev {
+      left: 0;
+   }
+
+   .swiper-button-next {
+      right: 0;
+   }
+   &:hover {
+      .swiper-button-prev, .swiper-button-next {
+         opacity: 1;
+         visibility: visible;
+      }
+      .swiper-button-prev {
+         left: 10px;
+      }
+      .swiper-button-next {
+         right: 10px;
+      }
+   }
+}
+
+
+.swiper-container {
+   position: relative;
+   &:hover {
+      .swiper-button-next {
+         opacity: 1;
+         visibility: visible;
+         right: -33px;
+      }
+      
+      .swiper-button-prev {
+         opacity: 1;
+         visibility: visible;
+         left: -33px;
+      }
+
+      @media all and (max-width: 1250px) {
+         .swiper-button-next { right: 13px; }
+         .swiper-button-prev { left: 13px; }
+      }
+   }
+}  
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: breadcrumbs
+----------------------------------------------------------------------
+*/
+.breadcrumbs {
+   padding-top: 5px;
+   display: flex;
+   align-items: center;
+   flex-wrap: wrap;
+   position: absolute;
+   left: 0;
+   top: 100%;
+   z-index: 1;
+   width: 100%;
+   min-width: 400px;
+   @media all and (max-width: 768px) {
+      min-width: 390px;
+   }
+   a, span {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+      font-size: 12px;
+      line-height: 150%;
+      display: flex;
+      align-items: center;
+      text-transform: uppercase;
+      color: $main-light;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+      @media all and (max-width: 768px) {
+         font-size: 10px;
+      }
+      strong {
+         padding: 0 5px;
+      }
+      &:hover {
+         & > span {
+            text-decoration: underline;
+         }
+      }
+   }
+}
+
+.page-title-documents .breadcrumbs,
+.page-title-products .breadcrumbs {
+   padding: 5px 0 0 0;
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: popup wrap
+----------------------------------------------------------------------
+*/
+.popup-wrap {
+   padding: 0 15px;
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   min-height: 100vh;
+   background: $overlay-bg;
+   display: grid;
+   grid-template-columns: 1fr;
+   grid-template-rows: 1fr;
+   opacity: 0;
+   visibility: hidden;
+   z-index: 2;
+   overflow: auto;
+   transition: all 0.2s ease-in-out 0.3s;
+   .popup {
+      margin: 30px;
+      padding: 40px;
+      max-width: max-content;
+      width: 100%;
+      justify-self: center;
+      align-self: center;
+      border-radius: 10px;
+      box-shadow: 20px 20px 50px rgb(0 0 0 / 50%);
+      background: rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.5);
+      border-left: 1px solid rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(1.1);
+      position: relative;
+      z-index: 1;
+      transition: all 0.2s ease-in-out 0s;
+   }
+   &.active {
+      opacity: 1;
+      visibility: visible;
+      transition: all 0.2s ease-in-out 0s;
+      .popup {
+         opacity: 1;
+         visibility: visible;
+         transform: scale(1);
+         transition: all 0.3s ease-in-out 0.2s;
+      }
+   }
+   .popup-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: 0;
+      cursor: pointer;
+   }
+}
+
+@media all and (max-width: 550px) {
+   .popup-wrap .popup { margin: 0; padding: 15px; }
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: header / footer background (planet)
+----------------------------------------------------------------------
+*/
+.hf-bg {
+   position: absolute;
+   top: 0;
+   right: 0;
+   width: 48%;
+   height: 100%;
+   background: url('../../img/app/header/h-bottom-bg.svg') no-repeat left;
+   &.footer {
+      top: 0;
+      left: 40%;
+      width: 100%;
+      background: url('../../img/app/footer-planet.svg') no-repeat left;
+      @media all and (max-width: 700px) {
+         left: 27%;
+      }
+      @media all and (max-width: 579px) {
+         background: url('../../img/app/footer-planet.svg') no-repeat left / cover;
+         left: 20%;
+      }
+   }
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: copyright
+----------------------------------------------------------------------
+*/
+.copyright {
+   margin-right: 15px;
+   font-family: 'Montserrat',sans-serif;
+   font-size: 12px;
+   font-weight: 400;
+   line-height: 150%;
+   color: $main-light;
+   @media all and (max-width: 620px) {
+      margin-right: 0;
+      text-align: center;
+      width: 100%;
+   }
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Социалки
+----------------------------------------------------------------------
+*/
+.socials {
+   display: flex;
+   align-items: center;
+   gap: 25px;
+   a {
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px;
+      color: $text-3;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s ease-out;
+      position: relative;
+      span {
+         padding: 2px 0 2px 0;
+         font-size: 13px;
+         font-weight: 300;
+         width: 0;
+         white-space: nowrap;
+         position: relative;
+         overflow: hidden;
+         text-decoration: underline;
+         color: $text-1;
+         transition: all 0.2s ease-out;
+      }
+      &.telegram:hover {
+         color: $telegram;
+         span { width: 132px; padding-left: 7px; }
+         // span::after { background: $telegram; }
+      }
+      
+      &.whatsapp:hover { 
+         color: $whatsapp; 
+         span { width: 136px; padding-left: 7px; }
+         // span::after { background: $whatsapp; }
+      }
+      &.wechat:hover { 
+         color: $wechat; 
+         span { width: 123px; padding-left: 7px; }
+         // span::after { background: $wechat; }
+      }
+      &.facebook:hover { 
+         color: $facebook; 
+         span { width: 98px; padding-left: 7px; }
+         // span::after { background: $facebook; }
+      }
+      &.instagram:hover { 
+         color: $instagram; 
+         span { width: 100px; padding-left: 7px; }
+         // span::after { background: $instagram; }
+      }
+      &.phone:hover { 
+         color: $phone; 
+         span { width: 116px; padding-left: 7px; }
+         // span::after { background: $phone; }
+      }
+   } 
+}
+
+.section-contact {
+   .socials {
+      padding-top: 19px;
+      border-top: 1px solid $border;
+      gap: 30px;
+      a {
+         color: $text-1;
+         font-size: 25px;
+         &:hover {
+            transform: translateX(3px);
+         }
+      }
+      a span, a:hover span {
+         display: none;
+      }
+   }
+}
+
+footer {
+   .socials {
+      a {
+         font-size: 17px;
+         color: $text-1;
+         &.telegram:hover {
+            color: $telegram2;
+            span { width: 132px; padding-left: 7px; }
+            // span::after { background: $telegram; }
+         }
+         
+         &.whatsapp:hover { 
+            color: $whatsapp2; 
+            span { width: 136px; padding-left: 7px; }
+            // span::after { background: $whatsapp; }
+         }
+         &.wechat:hover { 
+            color: $wechat2; 
+            span { width: 123px; padding-left: 7px; }
+            // span::after { background: $wechat; }
+         }
+         &.facebook:hover { 
+            color: $facebook2; 
+            span { width: 98px; padding-left: 7px; }
+            // span::after { background: $facebook; }
+         }
+         &.instagram:hover { 
+            color: $instagram2; 
+            span { width: 100px; padding-left: 7px; }
+            // span::after { background: $instagram; }
+         }
+         &.phone:hover { 
+            color: $phone2; 
+            span { width: 116px; padding-left: 7px; }
+            // span::after { background: $phone; }
+         }
+      }
+      a:hover {
+         transform: translateX(3px);
+      }
+      @media all and (max-width: 576px) {
+         margin-bottom: 15px;
+         order: 1;
+      }
+      a span, a:hover span {
+         display: none;
+      }
+   }
+}
+
+.mobile-menu .socials {
+   a {
+      font-size: 18px;
+      color: $text-1;
+      transition: all 0.15s ease-out;
+      &:hover {
+         transform: translateX(3px);
+      }
+   }
+   a span, a:hover span {
+      display: none;
+   }
+}
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Крестик (close)
+----------------------------------------------------------------------
+*/
+.ui-close {
+   @include closeIcon;
+}
+
+.mobile-menu .i-close {
+   @include closeIcon(false)
+}
+
+.popup-wrap .i-close {
+   @include closeIcon(true, $main-light)
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Языки
+----------------------------------------------------------------------
+*/
+.m-langs {
+   width: 100%;
+   display: flex;
+   justify-content: center;
+}
+
+.langs {
+   display: flex;
+   align-items: center;
+   gap: 7px;
+   li {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 20px;
+      text-transform: uppercase;
+      color: $text-3;
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      width: 22px;
+      transition: all 0.1s ease-out;
+      &:hover {
+         color: $main-dark;
+         font-weight: 600;
+      }
+      &.selected {
+         color: $main-colored;
+         font-weight: 700;
+      }
+      &:not(:last-child) {
+         padding-right: 7px;
+         &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0.7px;
+            height: 100%;
+            background: $text-3;
+         }
+      }
+   }
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Лого
+----------------------------------------------------------------------
+*/
+.logo {
+   max-width: 215px;
+   min-width: 150px;
+   transition: all 0.2s ease-out;
+   img {
+      max-width: 100%;
+      height: auto;
+   }
+   &:hover {
+      transform: translateX(5px);
+   }
+}
+
+.mobile-menu {
+   .logo {
+      max-width: 155px;
+   }
+}
+header.scroll .logo {
+   max-width: 180px;
+}
+
+@media all and (max-width: 620px) {
+   footer .logo img { max-width: 180px; width: 100%; }
+   footer .logo { min-width: auto; }
+}
+
+
+@media all and (max-width: 410px) {
+   header .logo { max-width: 150px; }
+}
+
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Стрелка (decoration)
+----------------------------------------------------------------------
+*/
+.has-children {
+   position: relative;
+   @include arrowDecoration (
+      $colorLineActive: $text-1,
+      $right: -3px,
+   );
+}
+
+.has-children[menu-arrow] {
+   position: relative;
+   @include arrowDecoration (
+      $colorLineActive: $text-1,
+      $right: -3px,
+      $heightLine: 1px,
+      $center: false,
+      $top: 8px,
+      $afterOffsetX: -110%
+   );
+}
+
+.has-children[has_children_right] {
+   @include arrowDecoration (
+      $click: true,
+      $right: 14px,
+      $toRight: true
+   );
+}
+
+.has-children[has_children_down] {
+   @include arrowDecoration (
+      $click: true,
+      $right: 28px,
+   );
+}
+
+ 
+/* 
+----------------------------------------------------------------------
+   TODO: Иконка бургер
+----------------------------------------------------------------------
+*/
+.burger {
+   margin-left: 20px;
+   position: relative;
+   width: 30px;
+   height: 20px;
+   min-width: 20px;
+   display: none;
+   flex-direction: column;
+   align-items: flex-end;
+   justify-content: space-between;
+   cursor: pointer;
+   
+   span {
+      height: 2px;
+      width: 100%;
+      border-radius: 20px;
+      background: $main-dark;
+      transition: all 0.15s ease-out;
+   }
+   &:hover span:nth-child(2) {
+      width: 70%;
+      background: $main-colored;
+   }
+   @media all and (max-width: 1140px) {
+      display: flex;
+   }
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Overlay
+----------------------------------------------------------------------
+*/
+.overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: $overlay-bg;
+   opacity: 0;
+   visibility: hidden;
+   z-index: 2;
+   transition: all 0.2s ease-out;
+   &.active {
+      opacity: 1;
+      visibility: visible;
+   }
+} 
+
+
+
+
+.hide-arrow {
+   margin: 10px auto 0 auto;
+   width: 15px;
+   height: 12px;
+   cursor: pointer;
+   background: url('../../img/app/icons/hide-arrow.svg') no-repeat center / contain;
+}
+.content .hide-arrow {
+   margin-top: 30px;
+}
+
+.content:hover,
+.aside-tabs .item-content ul:hover {
+   .hide-arrow {
+      animation: moveHideArrow 1s ease-out infinite;
+   }
+}
+
+@keyframes moveHideArrow {
+   0% { transform: translateY(0); }
+   50% { transform: translateY(-5px); }
+   100% { transform: translateY(0); }
+}

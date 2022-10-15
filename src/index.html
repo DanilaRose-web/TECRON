@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+@@include('components/_head.html', {
+   "title": "TECRON"
+})
+<body>
+   @@include('components/preloader.html')
+   
+   <main>
+      <div class="full-height">
+         @@include('components/_header.html')
+
+         <div class="ui-container title-container">
+            <h1 class="main-title animate"><strong>Защитная </strong>одежда</h1>
+            <h3 class="section-subtitle animate">для промышленного персонала</h3>
+         </div>
+         
+         <section class="section-main animate">
+            @@include('components/page-main/main-slider.html')
+         </section>
+      </div>
+
+      <section class="section-products">
+         <div class="ui-container">
+            <h2 class="section-title animate"><strong>Наша</strong> продукция</h2>
+            <div class="p-content animate">
+               @@include('components/our-products-content.html')
+            </div>
+         </div>
+      </section>
+
+      @@include('components/sections/section-contact.html', {
+         "strong": "Свяжитесь",
+         "title": "с нами"
+      })
+
+      @@include('components/_footer.html')
+   </main>
+   
+
+   @@include('components/mobile-menu/mobile-menu.html')
+   @@include('components/overlay.html')
+   
+   
+   <script src="libs/preloader.js"></script>
+   <script src="https://unpkg.com/imask"></script>
+   <script src="js/bundle.min.js"></script>
+   
+</body>
+</html>

@@ -1,0 +1,87 @@
+
+
+.aside-tabs[dont_has_child_tab], .aside-catalog-wrapper {
+   @include asideTabs (
+      $changeStyleOnTablet: false
+   )
+}
+
+.aside-catalog-wrapper > li {
+   display: none;
+}
+
+.aside-tabs[has_child_tab] {
+   @include asideTabs (
+      $hasChildTab: true,
+      $hasBorder: false,
+      $changeStyleOnTablet: false
+   );
+   img {
+      margin-right: 10px;
+      display: inline-block;
+      width: 28px;
+      height: auto;
+   }
+   .item-content {
+      ul {
+         padding: 13px;
+         background: $section-bg-1;
+         display: grid;
+         grid-template-columns: 1fr;
+         grid-template-rows: auto;
+         gap: 5px;
+         li, li > a {
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 150%;
+            color: $text-1;
+            a {
+               margin-right: 3px;
+               display: inline-block;
+               position: relative;
+               vertical-align: baseline;
+               transition: all 0.2s ease-out;
+               &:hover {
+                  text-decoration: underline;
+                  transform: translateX(3px);
+                  color: $main-colored;
+               }
+            }
+            span {
+               cursor: pointer;
+               transition: all 0.2s ease-out;
+               &:hover {
+                  text-decoration: underline;
+                  transform: translateX(3px);
+                  color: $main-colored;
+               }
+            }
+            strong {
+               font-weight: 600;
+            }
+            &.strong {
+               font-weight: 600;
+               text-transform: uppercase;
+            }
+         }
+         &:not(:last-child) {
+            margin-bottom: 10px;
+         }
+      }
+   }
+
+   @keyframes moveHideArrow {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0); }
+   }
+
+}
+
+@media all and (max-width: 800px) {
+   .aside-tabs[dont_has_child_tab] { display: none; }
+   .aside-catalog-wrapper > li { display: flex; }
+   .aside-catalog .row { padding-top: 30px; }
+}
+
+

@@ -1,0 +1,99 @@
+.contact-form {
+   display: grid;
+   grid-template-columns: 1fr;
+   grid-template-rows: auto;
+   gap: 20px;
+   .ui-button {
+      @include button (
+         $adaptiveWidth: true,
+         $maxWidth: 195px,
+         $margin: 29px 0 0 0
+      )
+   }
+}
+
+form {
+   .grid-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 20px;
+      &.doc-grid-item {
+         grid-template-columns: 1fr;
+         .d-form-item {
+            display: none;
+         }
+      }
+   }
+   .form-item {
+      position: relative;
+      .placeholder {
+         position: absolute;
+         left: 17px;
+         top: 17px;
+         font-size: 16px;
+         font-weight: 300;
+         line-height: 19px;
+         color: $text-4;
+         display: flex;
+         white-space: nowrap;
+         cursor: pointer;
+         transition: all 0.1s ease-out;
+         sup {
+            padding-left: 4px;
+            font-size: 15px;
+            font-weight: 300;
+            color: $main-colored;
+         }
+      }
+      .error-message {
+         position: relative;
+         left: 0;
+         bottom: -4px;
+         font-size: 13px;
+         font-weight: 500;
+         line-height: 100%;
+         color: $error;
+         display: none;
+         align-items: center;
+         transition: all 0.2s ease-out;
+         i {
+            margin-right: 3px;
+         }
+      }
+      input:focus + .placeholder,
+      textarea:focus+.placeholder {
+         opacity: 0;
+      }
+      &.error {
+         .field + .placeholder {
+            color: $error;
+         }
+         .error-message {
+            display: block;
+         }
+      }
+   }
+}
+
+
+// document form
+.d-form form .doc-grid-item {
+   grid-template-columns: 1fr 1fr;
+   .d-form-item {
+      display: block;
+   }
+}
+
+
+@media all and (max-width: 992px) {
+   .d-form .grid-item, .d-form .grid-item.doc-grid-item { grid-template-columns: 1fr; }
+}
+
+@media all and (max-width: 600px) {
+   form .grid-item { grid-template-columns: 1fr; }
+}
+
+@media all and (max-width: 360px) {
+   form .form-item .placeholder { font-size: 14px; }
+}

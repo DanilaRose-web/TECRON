@@ -1,0 +1,44 @@
+<header class="absolute">
+   <div class="h-top">
+      <div class="h-container">
+         @@include('./languages.html')
+         @@include('./socials.html')
+      </div>
+   </div>
+
+   <div class="h-bottom">
+      <div class="h-container">
+         @@include('./logo.html')
+         
+         <div class="nav-menu-wrap">
+            @@include('./nav-menu.html')
+            <div class="h-contact">
+               <a href="" class="ui-button smooth"><span>написать нам</span></a>
+               <div class="h-search" tabindex="0">
+                  <svg class="search-icon"><use xlink:href="../img/app/svg-sprite.svg#search_lg"></use></svg>
+                  @@include('./search-form.html')
+               </div>
+            </div>
+
+            @@include('mobile-menu/burger.html')
+         </div>
+      </div>
+   </div>
+</header>
+
+<header class="scroll">
+   <div class="h-bottom">
+      <div class="h-container">
+         @@include('./logo.html')
+
+         <div class="nav-menu-wrap">
+            @@include('./nav-menu.html')
+            <div class="h-contact">
+               <a href="" class="ui-button smooth"><span>написать нам</span></a>
+            </div>
+
+            @@include('mobile-menu/burger.html')
+         </div>
+      </div>
+   </div>
+</header>

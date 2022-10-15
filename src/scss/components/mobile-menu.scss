@@ -1,0 +1,179 @@
+.mobile-menu {
+   position: fixed;
+   top: 0;
+   right: -100%;
+   width: 100%;
+   height: 100%;
+   max-width: 400px;
+   background: $section-bg-1;
+   overflow-y: auto;
+   z-index: 3;
+   transition: all 0.3s ease-out;
+   box-shadow: 10px 0px 30px 10px rgb(0, 0, 0, 0.15);
+   &.active {
+      right: 0;
+   }
+   .content {
+      padding: 20px;
+      display: grid;
+      opacity: 0;
+      visibility: hidden; 
+      overflow: hidden;
+      transition: all 0.05s ease-out;
+   }
+   &.active .content {
+      opacity: 1;
+      visibility: visible;
+      height: auto;
+      overflow: visible;
+   }
+}
+
+
+.m-head {
+   padding: 15px 20px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   border-bottom: 1px solid $main-colored;
+}
+
+
+// menu tabs
+.m-tabs {
+   display: flex;
+   align-items: center;
+   width: 100%;
+   background: $section-bg-1;
+   .m-tab {
+      padding: 20px 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      font-size: 17px;
+      font-weight: 600;
+      color: $text-1;
+      text-transform: uppercase;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s ease-out;
+      &::after {
+         content: '';
+         position: absolute;
+         bottom: 0;
+         left: 50%;
+         transform: translateX(-50%);
+         width: 50%;
+         height: 1px;
+         background: $main-colored;
+         transition: all 0.2s ease-out;
+      }
+      &.active {
+         background: $main-colored;
+         color: $main-light;
+         &::after {
+            width: 100%;
+         }
+      }
+      &:hover {
+         background: $main-colored;
+         color: $main-light;
+      }
+   }
+}
+
+// menu
+.m-content {
+   overflow: hidden;
+}
+.m-menu {
+   margin-bottom: 30px;
+   padding-top: 20%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   ul {
+      li {
+         margin: 15px 10px;
+         position: relative;
+         display: flex;
+         justify-content: center;
+         a {
+            @extend %linksOfMenu;
+            @include hover_links($bg: $main-colored, $offsetX: 50%);
+            padding: 7px 10px;
+            font-size: 20px;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.2s ease-out;
+            &:hover {
+               color: $main-colored;
+            }
+         }
+      }
+   }
+}
+
+.m-item {
+   padding: 15px 0;
+   display: flex;
+   justify-content: center;
+   button {
+      @include button(
+         $light: true, 
+         $padding: 5px 17px, 
+         $fz: 16px,
+         $adaptiveWidth: true,
+         $maxWidth: 250px,
+         $shadow: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.15))
+      );
+   }
+}
+
+
+// catalog
+.m-catalog {
+   .mc-menu {
+      & > li {
+         padding: 0 10px;
+         transition: all 0.2s ease-out;
+         &:not(:last-child) {
+            border-bottom: 1px solid $section-bg
+         }
+         & > a {
+            @extend %linksOfMenu;
+            padding: 15px 0;
+            font-size: 17px;
+         }
+         &:hover, &.active {
+            border-bottom: 1px solid $main-colored;
+            & > a {
+               color: $main-colored;
+            }  
+         }
+      }
+   }
+   .mc-submenu {
+      padding-bottom: 10px;
+      & > li {
+         a {
+            @extend %linksOfMenu;
+            padding: 7px 0 7px 10px;
+            font-size: 15px;
+         }
+         &:hover {
+            a {
+               color: $main-colored;
+               transform: translateX(2px);
+            }
+         }
+      }
+   }
+}
+
+// media max-width: 700px
+@include mediaW700 {
+   .mobile-menu { display: grid; grid-template-columns: 1fr; grid-template-rows: max-content max-content 1fr; }
+} 
+

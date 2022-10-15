@@ -1,0 +1,66 @@
+.search-form {
+   display: flex;
+   align-items: center;
+   overflow: hidden;
+   border-radius: 5px;
+   position: relative;
+   max-height: 40px;
+   input {
+      @include input (
+         $padding: 0 56px 0 16px,
+         $fz: 15px,
+         $lh: 24px,
+         $bg: $search-bg,
+         $height: 40px,
+         $borderR: 5px,
+         $placeholder: $text-1,
+      )
+   }
+   .icon {
+      @extend %squareIconLink;
+      position: absolute;
+      top: 0;
+      right: 0;
+   }
+}
+
+.h-search {
+   padding: 15px 0 15px 19px;
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+   .icon {
+      display: none;
+   }
+   svg {
+      stroke: $text-1;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      transition: all 0.1s ease-out;
+      &:hover {
+         stroke: $main-colored;
+      }
+   }
+   .search-form {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 35px;
+      width: 0;
+      transition: all 0.2s ease-in-out;
+   }
+   &:focus, &:focus-within, &.hide {
+      .search-form {
+         right: 45px;
+         width: 700px;
+         transition-delay: 0.1s; 
+      }
+      svg {
+         stroke: $main-colored;
+      } 
+   }
+   @media all and (max-width: 1140px) {
+      display: none;
+   }
+}

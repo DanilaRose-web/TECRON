@@ -1,0 +1,1340 @@
+/* 
+----------------------------------------------------------------------
+   ! IMPORT
+----------------------------------------------------------------------
+*/ 
+@use "sass:list";
+@use "sass:math";
+
+
+
+
+
+
+/* 
+----------------------------------------------------------------------
+   ! VARIABLES
+----------------------------------------------------------------------
+*/ 
+$main-dark: #000;
+$main-colored: #94120A;
+$error: #B10444;
+$error-bg: #FACDD4;
+$main-light: #fff;
+$section-bg: #C5CED2;
+$section-bg-1: #F4F6F8;
+$heading-color: #2C2D2F;
+$border: #DAE0E3;
+$border-1: #929AA5;
+$border-2: rgba(188, 190, 192, 0.3);
+$decoration: #7B7B7B;
+$text-1: #4F5355;
+$text-2: #5D5D5D;
+$text-3: #666;
+$text-4: #999;
+$text-5: #3C3C41;
+$socials-light: #BCBEC0;
+$overlay-bg: rgba(19, 14, 14, 0.8);
+$search-bg: #E9EDF1;
+
+$telegram: #26A2E0;
+$whatsapp: #05891A;
+$wechat: #3FC568;
+$facebook: #3B5998;
+$instagram: #A024B5;
+$phone: #00A859;
+
+$telegram2: #43B6F6;
+$whatsapp2: #5FB862;
+$wechat2: #7EC88A;
+$facebook2: #728AE1;
+$instagram2: #D199DA;
+$phone2: #00A859;
+
+
+
+ 
+
+
+
+
+
+
+/* 
+----------------------------------------------------------------------
+   @function Адаптивный шрифт
+----------------------------------------------------------------------
+*/
+@function vw($fz, $base: 1100) {
+   // @return $fz / $base * 100vw; // данная запись деления уже устаревает
+   @return math.div($fz, $base) * 100vw; // использовать math.div(a, b) (для этого необходимо импортировать @use "sass:math";)
+   // @return calc($fz / $base * 100vw); // или функцию calc()
+}
+
+
+/* 
+----------------------------------------------------------------------
+   @function для вычисления процентной ширины (пропорция)
+   Использование: 
+      TODO: width: percentValue(300px, 960px); 
+      ? использовать можно для любого свойства, например для height/max-height/max-width/min-width и т.д.
+      ! аргументы являются обязательными 
+      * $elementWidth - ширина блока
+      * $containerWidth - ширина контейнера
+----------------------------------------------------------------------
+*/
+@function percentValue($elementWidth, $containerWidth) {
+   @return math.div($elementWidth, $containerWidth) * 100%;
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Анимация при скролле
+----------------------------------------------------------------------
+*/
+@mixin scrollAnimate (
+   $opacity: 0,
+   $transform: translate3d(0, 30px, 0),
+   $transformShow: translateY(0),
+   $transition: all 0.5s ease-out,
+   $transitionShow: all 0.5s ease-out,
+) {
+   opacity: $opacity;
+   visibility: hidden;
+   transform: $transform;
+   transition: $transition;
+   &.animate-show {
+      opacity: 1;
+      visibility: visible;
+      transform: $transformShow;
+      transition: $transitionShow;
+   }
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Стили ссылок при наведении
+----------------------------------------------------------------------
+*/
+@mixin hover_links(
+      $h: 2px,    // высота
+      $bg: purple,   // фон    
+      $offsetX: 0,   // направление по оси Х (по горизонтали)
+      $bottom: 0,
+      $trans: all 0.2s ease-out,  // переход
+      $colorHover: none,
+      $parentHover: false
+   ) {
+   position: relative;
+   &:before {
+      content: '';
+      position: absolute;
+      bottom: $bottom;
+      left: $offsetX;
+      width: 0;
+      height: $h;
+      background: $bg;
+      transition: $trans;
+      @if $offsetX == 50% {
+         transform: translateX(-50%);
+      } @else if $offsetX == 100% {
+         left: auto;
+         right: 0;
+      }
+   }
+   @if $parentHover == true {
+      color: $colorHover;
+      &::before {
+         width: 100%;
+      }
+   } @else {
+      &:hover {
+         color: $colorHover;
+         &::before {
+            width: 100%;
+         }
+      }
+   }
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Стили ссылок при наведении на родительский элемент
+----------------------------------------------------------------------
+*/
+@mixin parentHoverLinks(
+      $h: 2px,    // высота
+      $bg: purple,   // фон    
+      $offsetX: 0,   // направление по оси Х (по горизонтали)
+      $bottom: 0,
+      $trans: all 0.2s ease-out,  // переход
+      $colorHover: none,
+   ) {
+   position: relative;
+   & > a {
+      position: relative;
+      &:before {
+         content: '';
+         position: absolute;
+         bottom: $bottom;
+         left: $offsetX;
+         width: 0;
+         height: $h;
+         background: $bg;
+         transition: $trans;
+         @if $offsetX == 50% {
+            transform: translateX(-50%);
+         } @else if $offsetX == 100% {
+            left: auto;
+            right: 0;
+         }
+      }
+   }
+   &:hover {
+      a:before {
+         width: 100%;
+      }
+   }
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Container
+----------------------------------------------------------------------
+*/
+
+@mixin container (
+   $maxWidth: 1200px, 
+   $margin: 0 auto,
+   $padding: 0 15px, 
+   $flex: false,
+   $grid: false,
+   $columns: 0,
+   $rows: auto,
+   $gap: 30px
+   ) {
+      margin: $margin;
+      padding: $padding;
+      max-width: $maxWidth;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      @if $flex {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+      }
+      @if $grid {
+         display: grid;
+         grid-template-columns: $columns;
+         grid-template-rows: $rows;
+         align-items: start;
+         gap: $gap
+      }
+}
+.ui-container {
+   @include container
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Крестик (close)
+----------------------------------------------------------------------
+*/
+@mixin closeIcon (
+   $absolute: true,
+   $fill: $main-dark
+) {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 22px;
+   height: 22px;
+   position: absolute;
+   z-index: 2;
+   top: 15px;
+   right: 15px;
+   cursor: pointer;
+   @if $absolute == false {
+      position: relative;
+      top: auto;
+      left: auto;
+      right: auto;
+   }
+   svg {
+      width: 22px;
+      height: 22px;
+      fill: $fill;
+      transition: all 0.1s ease-out;
+   }
+   
+   &:hover svg {
+      fill: $main-colored;
+   }
+   
+   &:active svg {
+      transform: scale(0.8);
+   }
+}
+
+.ui-close {
+   @include closeIcon
+}
+.popup-wrap .ui-close {
+   @include closeIcon ($fill: $main-light)
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Заголовки
+----------------------------------------------------------------------
+*/ 
+
+@mixin sectionTitleLg (
+   $fz: 46px,
+   $lh: 89%,
+   $color: $main-light,
+   $strongColor: $main-light,
+   $tt: none,
+   $margin: 0 auto,
+   $padding: 34px 56px 34px 0,
+   $display: 'inline-block',
+) {
+      @include container;
+      margin: $margin;
+      position: relative;
+      @include scrollAnimate;
+      &::after {
+         content: '';
+         position: absolute;
+         right: 100%;
+         top: 50%;
+         transform: translateY(-50%);
+         background: $main-light;
+         width: 100%;
+         height: 4px;
+         z-index: 1;
+      }
+      .section-title-lg {
+         padding: $padding;
+         font-family: 'Montserrat', sans-serif;
+         font-size: $fz;
+         font-weight: 300;
+         line-height: $lh;
+         letter-spacing: -0.02em;
+         color: $color;
+         display: $display;
+         text-transform: $tt;
+         position: relative;
+         z-index: 1;
+         span {
+            position: relative;
+            z-index: 1;
+         }
+         strong {
+            font-weight: 800;
+            color: $strongColor;
+         }
+         &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 1000%;
+            height: 100%;
+            background: $main-colored;
+            z-index: 0;
+            transform: skewX(-15deg);
+            box-shadow: 0px -12px 25px rgba(46, 78, 96, 0.07);
+         }
+      }
+}
+
+@media all and (max-width: 750px) {
+   .title-wrap .section-title { font-size: calc((100vw - 280px)/(750 - 280) * (46 - 33) + 33px); }
+}
+@media all and (max-width: 600px) {
+   .title-wrap .section-title { padding: 24px 24px 24px 0; }
+}
+
+.title-block {
+   position: relative;
+   top: -57px;
+   overflow: hidden;
+}
+
+.title-wrap {
+   @include sectionTitleLg
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Page title
+----------------------------------------------------------------------
+*/ 
+@mixin pageTitle (
+   $margin: 0 auto,
+   $marginWrap: 0 0 82px 0,
+   $padding: 87px 56px 80px 0,
+   $fontSize: 52px,
+   $lineHeight: 89%,
+   $color: $main-light,
+   $textTransform: none,
+   $display: 'inline-block',
+   $bgImage: '',
+) {
+   margin: $marginWrap;
+   position: relative;
+   overflow: hidden;
+   transition: all 0.2s ease-out;
+   .page-title-bg {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      right: 0;
+      background: $bgImage;
+      transition: all 0.3s ease-out;
+   }
+   .page-title-wrap {
+      @include container;
+      margin: $margin;
+      position: relative;
+      .page-title-content {
+         // padding: $padding;
+         position: relative;
+         display: flex;
+         align-items: center;
+         justify-content: flex-start;
+         height: 248px;
+         z-index: 1;
+         &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 750px;
+            width: 1000%;
+            height: 100%;
+            background: $main-colored;
+            z-index: 0;
+            transform: skewX(-15deg);
+         }
+         &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 626px;
+            width: 1000%;
+            height: 100%;
+            background: rgba(166, 38, 30, 0.3);
+            backdrop-filter: blur(5px);
+            transform: matrix(1, 0, 0, -1, 0, 0);
+            z-index: 0;
+            transform: skewX(-15deg);
+         }
+         @media all and (max-width: 1801px) {
+            height: calc((100vw - 1028px)/(1800 - 1028) * (248 - 178) + 178px);
+            &::after {
+               right: auto;
+               left: -400px;
+               width: calc((100vw - 1028px)/(1800 - 1028) * (820 - 705) + 705px);
+            }
+            &::before {
+               right: auto;
+               left: -400px;
+               width: calc((100vw - 1028px)/(1800 - 1028) * (945 - 830) + 830px);
+            }
+         }
+
+         @media all and (max-width: 1140px) {
+            padding-top: calc((100vw - 320px)/(1028 - 320) * (60 - 36) + 36px);
+            align-items: flex-start;
+         }
+
+         @media all and (max-width: 1028px) {
+            height: calc((100vw - 768px)/(1028 - 768) * (178 - 160) + 160px);
+            
+            
+            &::after {
+               right: auto;
+               left: -400px;
+               width: calc((100vw - 768px)/(1028 - 768) * (705 - 680) + 680px);
+            }
+            &::before {
+               right: auto;
+               left: -400px;
+               width: calc((100vw - 768px)/(1028 - 768) * (830 - 780) + 780px);
+            }
+         }
+         @media all and (max-width: 768px) {
+            height: calc((100vw - 320px)/(768 - 320) * (160 - 122) + 122px);
+            &::after {
+               right: auto;
+               left: -55px;
+               width: calc((100vw - 320px)/(768 - 320) * (360 - 320) + 320px);
+            }
+            &::before {
+               right: auto;
+               left: 70px;
+               width: calc((100vw - 320px)/(768 - 320) * (335 - 300) + 300px);
+            }
+         }
+         .page-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: $fontSize;
+            font-weight: 800;
+            line-height: $lineHeight;
+            letter-spacing: -0.02em;
+            color: $color;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-transform: $textTransform;
+            position: relative;
+            z-index: 1;
+            min-width: 367px;
+            strong {
+               position: relative;
+               z-index: 1;
+               display: block;
+            }
+            &:after {
+               content: '';
+               position: absolute;
+               top: 55%;
+               right: calc(100% + 15px);
+               width: 1000%;
+               height: 4px;
+               background: $main-light;
+            }
+            @media all and(max-width: 1801px) {
+               font-size: calc((100vw - 1028px)/(1801 - 1028) * (52 - 37) + 37px);
+               min-width: calc((100vw - 1028px)/(1801 - 1028) * (367 - 260) + 260px);
+            }
+            @media all and(max-width: 1028px) {
+               font-size: calc((100vw - 768px)/(1028 - 768) * (37 - 35) + 35px);
+            }
+            @media all and(max-width: 768px) {
+               font-size: calc((100vw - 320px)/(768 - 320) * (35 - 32) + 32px);
+            }
+         }
+      }
+   }
+}
+
+.page-title-about {
+   @include pageTitle ($bgImage: url('../img/app/backgrounds/page-about.webp') no-repeat center / cover);
+}
+.page-title-support {
+   @include pageTitle ($bgImage: url('../img/app/backgrounds/page-support1.webp') no-repeat center / cover);
+}
+.page-title-products {
+   @include pageTitle ($bgImage: url('../img/app/backgrounds/page-title-bg.webp') no-repeat center / cover); 
+}
+.page-title-product-single {
+   @include pageTitle ($bgImage: url('../img/app/backgrounds/page-products1.webp') no-repeat center / cover);
+}
+.page-title-buy {
+   @include pageTitle ($bgImage: url('../img/app/backgrounds/page-buy.webp') no-repeat center / cover);
+}
+.page-title-404 {
+   @include pageTitle ($bgImage: url('../img/app/backgrounds/page-404.webp') no-repeat center / cover);
+}
+
+
+
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: UI-text
+----------------------------------------------------------------------
+*/ 
+@mixin uiText (
+   $margin: 0,
+   $padding: 0,
+   $fontSize: 16px,
+   $fontWeight: 300,
+   $lineHeight: 150%,
+   $color: $text-2,
+   $textAlign: left,
+   $letterSpacing: 0,
+   $maxWidth: auto
+) {
+   margin: $margin;
+   padding: $padding;
+   font-size: $fontSize;
+   font-weight: $fontWeight;
+   line-height: $lineHeight;
+   color: $color;
+   max-width: $maxWidth;
+   letter-spacing: $letterSpacing;
+}
+
+.ui-text {
+   @include uiText()
+}
+.ui-text-1 {
+   @include uiText (
+      $margin: 52px 0 0 0,
+      $letterSpacing: -0.01em,
+      $color: $text-1
+   )
+}
+.ui-text-2 {
+   @include uiText (
+      $margin: 0 0 21px 0,
+      $fontSize: 18px,
+      $lineHeight: 133%,
+      $color: $text-3,
+      $maxWidth: 625px
+   );
+   @include scrollAnimate($transform: translateX(15px), $transformShow: translateX(0));
+}
+.ui-text-3 {
+   @include uiText (
+      $margin: 0 0 42px 0,
+      $fontSize: 18px,
+      $lineHeight: 140%,
+      $color: $text-1,
+      $maxWidth: 625px
+   );
+   @include scrollAnimate($transform: translateX(15px), $transformShow: translateX(0));
+}
+.ui-text-4 {
+   @include uiText( $fontSize: 14px );
+   &.strong {
+      font-weight: 600;
+   }
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Subtitle
+----------------------------------------------------------------------
+*/ 
+@mixin sectionSubtitle (
+   $fz: 28px,
+   $fw: 400,
+   $lh: 121%,
+   $color: $heading-color,
+   $ta: center,
+   $letterSpacing: 0.05em,
+   $margin: 0 0 41px 0,
+   $padding: 0,
+   $maxWidth: 100%,
+) {
+   margin: $margin;
+   padding: $padding;
+   font-size: $fz;
+   font-weight: $fw;
+   line-height: $lh;
+   color: $color;
+   letter-spacing: $letterSpacing;
+   text-align: $ta;
+   max-width: $maxWidth;
+}
+
+.section-subtitle {
+   @include sectionSubtitle
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Input
+----------------------------------------------------------------------
+*/
+@mixin input (
+   $padding: 16px 17px,
+   $fz: 16px,
+   $fw: 300,
+   $lh: 20px,
+   $color: $main-dark,
+   $placeholder: $text-4,
+   $bg: $main-light,
+   $border: 1px solid transparent,
+   $borderR: 3px,
+   $maxWidth: 100%,
+   $minHeight: inherit,
+   $height: inherit,
+   $isTextarea: false,
+   $minHeightTextarea: 100px
+) {
+   padding: $padding;
+   font-family: 'Roboto', sans-serif;
+   font-weight: $fw;
+   font-size: $fz;
+   line-height: $lh;
+   color: $color;
+   background: $bg;
+   border: $border;
+   border-radius: $borderR;
+   width: 100%;
+   max-width: $maxWidth;
+   min-height: $minHeight;
+   height: $height;
+   transition: all 0.2s ease-out;
+   @if $isTextarea {
+      min-height: $minHeightTextarea
+   }
+   &::-webkit-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: $placeholder;
+      opacity: 1; /* Firefox */
+   }
+
+   &:-moz-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: $placeholder;
+      opacity: 1; /* Firefox */
+   }
+
+   &::-moz-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: $placeholder;
+      opacity: 1; /* Firefox */
+   }
+
+   &:-ms-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: $placeholder;
+      opacity: 1; /* Firefox */
+   }
+
+   &::-ms-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: $placeholder;
+      opacity: 1; /* Firefox */
+   }
+
+   &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: $placeholder;
+      opacity: 1; /* Firefox */
+   }
+   
+   &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color: $placeholder;
+   }
+   
+   &::-ms-input-placeholder { /* Microsoft Edge */
+      color: $placeholder;
+   }
+}
+
+input {
+   @include input;
+}
+
+textarea {
+   @include input($isTextarea: true)
+}
+
+.form-item.error, .search-form.error {
+   input {
+      @include input ( $border: 1px solid transparent, $bg: $error-bg, $color: $error )
+   }
+   textarea {
+      @include input ( $isTextarea: true, $border: 1px solid transparent, $bg: $error-bg, $color: $error )
+   }
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Button
+----------------------------------------------------------------------
+*/
+@mixin button (
+   $fw: 500,
+   $fz: 21px,
+   $tt: uppercase,
+   $lh: 121%,
+   $padding: 12px 25px,
+   $margin: 0,
+   $light: false,
+   $adaptiveWidth: false,
+   $minHeight: auto,
+   $width: inherit,
+   $height: inherit,
+   $maxWidth: inherit,
+   $shadow: drop-shadow(0px 4px 14px rgba(0, 0, 0, 0.16)),
+   $bg: transparent,
+   $beforeBorder: 2px solid $main-colored,
+) {
+   margin: $margin;
+   padding: $padding;
+   font-family: 'Roboto', sans-serif;
+   font-weight: $fw;
+   font-size: $fz;
+   line-height: $lh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   text-transform: $tt;
+   border-radius: 3px;
+   border: none;
+   position: relative;
+   overflow: hidden;
+   filter: $shadow;
+   background: $bg;
+   width: $width;
+   height: $height;
+   transition: all 0.2s ease-out;
+   span, svg {
+      position: relative;
+      z-index: 1;
+      color: $main-light;
+      transition: all 0.3s ease-out;
+   }
+   &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: $beforeBorder;
+      z-index: 1;
+      border-radius: 3px;
+   }
+   &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: $main-colored;
+      border-radius: 3px;
+      z-index: 0;
+      animation: buttonHoverAnimationRev 0.3s ease-out forwards;
+   }
+   &:active {
+      animation: onclick 0.2s ease-out forwards;
+   }
+   &:hover {
+      background-position: 100%;
+      &::after {
+         animation: buttonHoverAnimation 0.3s ease-out forwards;
+         border-color: $main-colored;
+      }
+      span {
+         color: $main-colored;
+      }
+   }
+   @media all and (max-width: 450px) {
+      padding: 12px 15px;
+      font-size: 17px;
+   }
+   @if $light == true {
+      color: $main-colored;
+      background: transparent;
+      border-color: $main-colored;
+      span {
+         color: $main-colored;
+      }
+      &::after {
+         left: -100%;
+         animation: buttonHoverAnimationLightRev 0.3s ease-out forwards;
+      }
+      &:hover {
+         &::after {
+            animation: buttonHoverAnimationLight 0.3s ease-out forwards;
+         }
+         span {
+            color: $main-light;
+         }
+      } 
+   }
+
+   @if $adaptiveWidth == true {
+      min-height: $minHeight;
+      max-width: $maxWidth;
+      width: 100%;
+   } 
+}
+
+// colored button hover animation
+@keyframes buttonHoverAnimation {
+   0% { left: 0; }
+   100% { left: 100%; }
+}
+@keyframes buttonHoverAnimationRev {
+   0% { left: -100%; }
+   100% { left: 0; }
+}
+
+// transparent button hover animation
+@keyframes buttonHoverAnimationLight {
+   0% { left: -100%; }
+   100% { left: 0; }
+}
+@keyframes buttonHoverAnimationLightRev {
+   0% { left: 0; }
+   100% { left: 100%; }
+}
+
+// onclick button hover animation
+@keyframes onclick {
+   0% { transform: scale(1); }
+   50% { transform: scale(0.97); }
+   100% { transform: scale(1); }
+}
+
+.ui-button {
+   @include button
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Aside tabs
+----------------------------------------------------------------------
+*/
+@mixin asideTabs (
+   $hasChildTab: false,
+   $hasBorder: true,
+   $changeStyleOnTablet: true,
+   $padding: 10px 14px,
+   $borderLi: 1px solid $border,
+   $borderRadius: 0,
+   $fontSize: 20px,
+   $fontWeight: 400,
+   $lineHeight: 120%,
+   $color: $heading-color,
+   $activeColor: $main-light,
+   $background: transparent,
+   $actveBackground: $main-colored,
+   $minHeight: 74px,
+   $columns: 1fr,
+   $rows: auto,
+   $gap: 0,
+) {
+   display: grid;
+   grid-template-columns: $columns;
+   grid-template-rows: $rows;
+   gap: $gap;
+   @if $hasBorder == true {
+      & > li {
+         border-bottom: $borderLi;
+         &:first-child {
+            border-top: $borderLi;
+         }
+      }
+   }
+
+   @if $hasChildTab == true {
+      $padding: 10px 22px;
+      $fontSize: 16px;
+      $fontWeight: 500;
+      $lineHeight: 16px;
+      $gap: 10px;
+      $color: $text-1;
+      $background: $section-bg-1;
+      $minHeight: 69px;
+
+      gap: $gap;
+      .top {
+         padding: $padding;
+         font-size: $fontSize;
+         font-weight: $fontWeight;
+         line-height: $lineHeight;
+         color: $color;
+         background: $background;
+         width: 100%;
+         min-height: $minHeight;
+         display: flex;
+         align-items: center;
+         cursor: pointer;
+         transition: all 0.2s ease-out;
+         &:hover, &.active {
+            color: $activeColor;
+            background: $actveBackground;
+         }
+      }
+   } @else {
+      & > li {
+         padding: $padding;
+         font-size: $fontSize;
+         font-weight: $fontWeight;
+         line-height: $lineHeight;
+         color: $color;
+         background: $background;
+         width: 100%;
+         min-height: $minHeight;
+         display: flex;
+         align-items: center;
+         cursor: pointer;
+         transition: all 0.2s ease-out;
+         &:hover, &.active {
+            color: $activeColor;
+            background: $actveBackground;
+         }
+      }
+   }
+   
+   @if $changeStyleOnTablet == true {
+      @media all and (max-width: 800px) {
+         $padding: 10px 15px;
+         $fontSize: 16px;
+         $borderLi: 1px solid $main-colored;
+         $borderRadius: 5px;
+         $minHeight: auto;
+         $columns: repeat(auto-fill, minmax(200px, 1fr));
+         $gap: 15px;
+
+         grid-template-columns: $columns;
+         gap: $gap;
+         & > li {
+            padding: $padding;
+            font-size: $fontSize;
+            text-align: center;
+            border-radius: $borderRadius;
+            min-height: auto;
+            justify-content: center;
+            color: $main-colored;
+            @if $hasBorder == true {
+               border: $borderLi;
+               &:first-child {
+                  border-top: $borderLi;
+               }
+            }
+            .arrow-decoration { display: none; }
+         }
+      }
+   }
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: ui-accordion
+----------------------------------------------------------------------
+*/
+
+
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Стрелка (decoration)
+----------------------------------------------------------------------
+*/
+@mixin arrowDecorationActive (
+   $color: $main-light
+) {
+   .arrow-decoration {
+      &:before, &:after { background: $color; }
+      &:before { transform: rotate(-45deg); }
+      &:after {transform: rotate(45deg); }
+   }
+}
+
+@mixin arrowDecoration(
+   $width: 7px,
+   $height: 5px,
+   $top: 50%,
+   $right: 0,
+   $heightLine: 2px,
+   $colorLine: $text-1,
+   $colorLineActive: $main-light,
+   $widthLine: 100%,
+   $beforeOffsetX: 3px,
+   $afterOffsetX: -100% ,
+   $center: true,
+   $hover: true,
+   $click: false,
+   $toUp: false,
+   $toRight: false,
+   $toLeft: false
+) {
+   .arrow-decoration {
+      position: absolute;
+      width: $width;
+      height: $height;
+      top: $top;
+      right: $right;
+      transition: all 0.2s ease-out;
+      &::before, &::after {
+         content: '';
+         position: absolute;
+         height: $heightLine;
+         width: $widthLine;
+         border-radius: 15px;
+         top: 0;
+         background: $colorLine;
+         transition: all 0.2s ease-out;
+      }
+      &::before {
+         left: $beforeOffsetX;
+         transform: rotate(45deg);
+      }
+      &::after {
+         right: $afterOffsetX;
+         transform: rotate(-45deg);
+      }
+   }
+
+   @if $center == false {
+      .arrow-decoration { transform: none; top: $top; }
+   } @else {
+      $top: 50%;
+      .arrow-decoration { transform: translateY(-50%); top: $top; }
+   }
+
+   @if $toUp == true {
+      .arrow-decoration { transform: translateY($top) rotate(180deg); }
+   }
+   @if $toRight == true {
+      .arrow-decoration { transform: translateY($top) rotate(-90deg); }
+   }
+   @if $toLeft == true {
+      .arrow-decoration { transform: translateY($top) rotate(90deg); }
+   }
+
+   @if $hover == true {
+      &:hover {
+         @include arrowDecorationActive($color: $colorLineActive)
+      }
+   };
+
+   @if $click == true {
+      &.active {
+         @include arrowDecorationActive($color: $colorLineActive)
+      }
+   };
+}
+
+
+
+
+
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Media queries
+----------------------------------------------------------------------
+*/
+@mixin media($bpName, $bp) {
+   @media all and ($bpName: $bp) {
+      @content
+   }
+};
+
+
+@mixin mediaW1200() {
+   @media all and (max-width: 1200px) {
+      @content
+   }
+};
+
+@mixin mediaW700() {
+   @media all and (max-width: 700px) {
+      @content
+   }
+};
+
+@mixin mediaW320() {
+   @media all and (max-width: 320px) {
+      @content
+   }
+};
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: @extend стили ссылок меню
+----------------------------------------------------------------------
+*/
+%linksOfMenu {
+   font-size: 16px;
+   font-weight: 400;
+   line-height: 121%;
+   letter-spacing: -0.02em;
+   color: $text-1;
+   display: flex;
+   transition: all 0.2s ease-out;
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Стили для Lava Lamp
+----------------------------------------------------------------------
+*/
+%lavaLamp {
+   padding: 0;
+   position: absolute;
+   background: $main-colored;
+   bottom: 0;
+   left: 0;
+   height: 3px;
+   &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-right: 10px solid transparent;
+      border-left: 10px solid transparent;
+      border-top: 10px solid $main-colored;
+   }
+}
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Стили для квадратных иконок (социалки)
+----------------------------------------------------------------------
+*/
+%squareIconLink {
+   border-radius: 4px;
+   width: 40px;
+   height: 40px;
+   background: transparent;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   position: relative;
+   overflow: hidden;
+   cursor: pointer;
+   transition: all 0.3s ease-out;
+   &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: $main-colored;
+      z-index: 0;
+      animation: buttonHoverAnimationRev 0.3s ease-out forwards;
+   }
+   svg {
+      width: 22px;
+      height: 17px;
+      fill: $main-light;
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease-out;
+   }
+   &:hover {
+      svg {
+         fill: $main-colored;
+      }
+      &::after {
+         animation: buttonHoverAnimation 0.3s ease-out forwards;
+      }
+   }
+}
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Стили для квадратных иконок - светлые (социалки)
+----------------------------------------------------------------------
+*/
+%squareIconLinkLight {
+   border-radius: 4px;
+   width: 40px;
+   height: 40px;
+   background: transparent;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   position: relative;
+   overflow: hidden;
+   cursor: pointer;
+   transition: all 0.3s ease-out;
+   &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: $main-colored;
+      z-index: 0;
+      animation: buttonHoverAnimationLightRev 0.3s ease-out forwards;
+   }
+   svg {
+      width: 22px;
+      height: 17px;
+      fill: $text-1;
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease-out;
+   }
+   &:hover {
+      svg {
+         fill: $main-light;
+      }
+      &::after {
+         animation: buttonHoverAnimationLight 0.3s ease-out forwards;
+      }
+   }
+}
+
+
+
+
+/* 
+----------------------------------------------------------------------
+   TODO: Section title 
+----------------------------------------------------------------------
+*/
+%sectionTitle {
+   margin-bottom: 63px;
+   padding: 0 0 24px 0;
+   font-family: 'Montserrat', sans-serif;
+   font-weight: 400;
+   font-size: 46px;
+   line-height: 89%;
+   letter-spacing: -0.02em;
+   color: $main-dark;
+   position: relative;
+   @include scrollAnimate;
+   strong {
+      font-weight: 800;
+   }
+   &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 75px;
+      height: 4px;
+      background: $main-colored;
+   }
+   @media all and (max-width: 450px) {
+      font-size: calc((100vw - 280px)/(450 - 280) * (46 - 33) + 33px);;
+   }
+}
+
+.section-title {
+   @extend %sectionTitle;
+}

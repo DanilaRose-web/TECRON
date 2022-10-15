@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+   @@include('components/_head.html', {
+      "title": "TECRON"
+   })
+<body>
+   @@include('components/preloader.html')
+   @@include('components/preloader-line.html')
+   
+   <main>
+      @@include('components/_header.html')
+
+      <div class="page-title-products" data-calc-height>
+         <div class="page-title-bg"></div>
+         <div class="page-title-wrap">
+            
+            <div class="page-title-content">
+               <h2 class="page-title">
+                  <strong>About</strong>
+                  <div class="breadcrumbs">
+                     <a href="/"><span>TECRON</span> <strong>/</strong></a>
+                     <a href="/"><span>Where to buy</span> <strong>/</strong></a>
+                     <a href="/"><span>Earplugs</span> <strong>/</strong></a>
+                     <span>TECRON™ CLASSIC FORM CORDED 37DB</span>
+                  </div>
+               </h2>
+
+            </div>
+         </div>
+      </div>
+
+      @@include('components/sections/section-contact.html', {
+         "strong": "Получить",
+         "title": "консультацию"
+      })
+
+      @@include('components/_footer.html')
+   </main>
+   
+
+   @@include('components/mobile-menu/mobile-menu.html')
+   @@include('components/overlay.html')
+
+   <script src="libs/preloader.js"></script>
+   <script src="https://unpkg.com/imask"></script>
+   <script src="js/bundle.min.js"></script>
+</body>
+</html>

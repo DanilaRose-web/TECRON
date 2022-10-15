@@ -1,0 +1,12 @@
+/* section recommendend */
+.section-recommendend {
+   padding: 130px 0;
+}
+
+.r-content-wrap {
+   @include scrollAnimate;
+}
+
+.recommendend-swiper {
+   padding: 10px 0 10px 0;
+}

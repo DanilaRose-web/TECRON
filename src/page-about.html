@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+   @@include('components/_head.html', {
+      "title": "TECRON"
+   })
+<body>
+   @@include('components/preloader.html')
+   @@include('components/preloader-line.html')
+   
+   <main class="static-page">
+      @@include('components/_header.html')
+
+      <div class="page-title-about" data-calc-height>
+         <div class="page-title-bg"></div>
+         <div class="page-title-wrap">
+            <div class="page-title-content">
+               <h2 class="page-title"><strong>О компании</strong></h2>
+
+               <div class="breadcrumbs">
+                  <a href="/"><span>TECRON</span> <strong>/</strong></a>
+                  <span>О компании</span>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <section class="section-a-main">
+         <div class="ui-container">
+            <div class="section-content">
+               <p class="ui-text animate">Компания IntegraWay Co., LTD является производителем продукции под торговой маркой TECRON. Основная цель компании - разработка и выпуск качественных средств индивидуальной защиты, которые максимально эффективно защищают работников различных индустрий и промышленности от вредных факторов на производстве. Мы также уделяем особое внимание комфортности и эргономики использования продукции TECRON, так как удобство СИЗ повышает эффективность сотрудников, и соответветственно производственные показатели всех компаний, которые пользуются продукцией TECRON. Производство продукции TECRON расположено в материковом Китае, наши сотрудники постоянно контролируют производственный процесс, а также процесс разработки новой продукции.</p>
+ 
+               <div class="am-video-wrap animate">
+                  <iframe width="560" height="315" src="https://www.youtube.com/embed/PkDgq0mG8mg" title="YouTube video player"
+                     frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                     allowfullscreen></iframe>
+               </div>
+            </div>
+
+            <p class="ui-text animate">История бренда TECRON начинается с 2015 года, когда был разработан универсальный защитный одноразовый комбинезон TECRON Pro. Данная модель была разработана на основе пожеланий и требований работников химической и нефтегазовой промышленности. Главный упор в данной модели был сделан на максимальную защиту и комфорт. Специально для этой модели был разработан уникальный тип манжетов, аналогов которых не было в то время на рынке. Комбинезон за несколько лет приобрел популярность и его начали применять в остальных отраслях: авто покраска, малярные работы, химическая обработка и дезинфекция, пищевая промышленность и так далее. В 2016 году был выпущена более простая модель комбинезона TECRON Classic Light - одноразовый комбинезон для менее опасных производств. На сегодняшний день, TECRON это не только защитные комбинезоны, но и ряд других типов средств защит. Ежегодно ассортимент нашей продукции пополняется новыми моделями. Продукция торговой марки TECRON имеет сертификацию CE и EAC, и удовлетворяет требованиям соответствующих стандартов качества.</p>
+         </div>
+      </section>
+
+      <section class="section-a-certificate">
+         <div class="ui-container">
+            <!-- <div class="ac-doc animate"><img src="img/app/docs/doc1.webp" alt="Сертифицированная продукция"></div> -->
+            <h2 class="section-title animate"><strong>Евро</strong> сертификация</h2>
+
+            <div class="certificate-wrap">
+               <div class="certificates">
+                  <div class="img">
+                     <svg><use xlink:href="../img/app/svg-sprite.svg#search_lg"></use></svg>
+                     <img src="img/app/about/certificate1.webp" alt="">
+                  </div>
+                  <div class="img">
+                     <svg><use xlink:href="../img/app/svg-sprite.svg#search_lg"></use></svg>
+                     <img src="img/app/about/certificate2.webp" alt="">
+                  </div>
+               </div>
+               <div class="certificate-info">
+                  <div class="certificate-logo"><img src="img/app/about/sertificate-logo.svg" alt="SGS"></div>
+                  <p class="ui-text animate">Мы проработали весь пакет нормативных документов, необходимых для организации работы, как с юридическими, так и с физическими лицами. Плодотворная работа партнеров основана на необходимых документах, помогающих строго регламентировать обязанности сторон. В соответствующих разделах представлены все документы, которые могут пригодиться в штатной рабочей ситуации.</p>
+               </div>
+            </div>
+         </div>
+      </section> 
+
+      @@include('components/_footer.html')
+   </main>
+   
+
+   @@include('components/mobile-menu/mobile-menu.html')
+   @@include('components/overlay.html')
+   @@include('components/page-about/popup-certificate.html')
+
+   <script src="libs/preloader.js"></script>
+   <script src="js/bundle.min.js"></script>
+</body>
+</html>
